@@ -4,13 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Визитка</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1c1610">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Визитка">
-  <link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -339,13 +332,36 @@ function buildVCardFull(d) {
 }
 
 function downloadVCF() {
-  storeGet('contact').then(data => {
+  storeGet('contact').then(async data => {
     if (!data || !data.name) return;
-    const blob = new Blob([buildVCardFull(data)], { type: 'text/vcard;charset=utf-8' });
-    const url  = URL.createObjectURL(blob);
-    const a    = Object.assign(document.createElement('a'), { href: url, download: (data.name.replace(/\s+/g,'_')||'contact') + '.vcf' });
-    document.body.appendChild(a); a.click();
-    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+    const vcf      = buildVCardFull(data);
+    const filename = (data.name.replace(/\s+/g,'_') || 'contact') + '.vcf';
+
+    // 1. Web Share API — лучший вариант на мобильных (Android/iOS)
+    if (navigator.share && navigator.canShare) {
+      try {
+        const file = new File([vcf], filename, { type: 'text/vcard' });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: data.name });
+          return;
+        }
+      } catch(e) { /* fallthrough */ }
+    }
+
+    // 2. data: URI — работает в большинстве браузеров
+    try {
+      const b64  = btoa(unescape(encodeURIComponent(vcf)));
+      const uri  = 'data:text/vcard;charset=utf-8;base64,' + b64;
+      const a    = Object.assign(document.createElement('a'), { href: uri, download: filename });
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      return;
+    } catch(e) { /* fallthrough */ }
+
+    // 3. Fallback — открыть в новой вкладке
+    const b64 = btoa(unescape(encodeURIComponent(vcf)));
+    window.open('data:text/vcard;charset=utf-8;base64,' + b64, '_blank');
   });
 }
 
@@ -484,12 +500,6 @@ async function save() {
   loadForm(data);
   renderQR(data);
 })();
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
-}
 </script>
 </body>
 </html>
