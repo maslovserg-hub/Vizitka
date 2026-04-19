@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Визитка</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1c1610">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Визитка">
+  <link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --linen:    #f4ede4;
+  --paper:    #fff9f3;
+  --espresso: #1c1610;
+  --brown:    #2e2318;
+  --gold:     #b8965a;
+  --warm:     #7a6e60;
+  --muted:    #b0a090;
+  --border:   #e0d5c5;
+  --serif:    'Cormorant Garamond', Georgia, serif;
+  --sans:     'Jost', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--linen);
+  color: var(--brown);
+  font-family: var(--sans);
+  font-weight: 300;
+  min-height: 100vh;
+  padding-bottom: 64px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+.app { max-width: 400px; margin: 0 auto; padding: 0 20px; }
+
+/* ── Header ── */
+header { padding: 40px 0 28px; text-align: center; animation: rise .7s cubic-bezier(.16,1,.3,1) both; }
+.wordmark { font-family: var(--serif); font-weight: 300; font-size: 2rem; letter-spacing: .45em; color: var(--espresso); text-transform: uppercase; margin-bottom: 10px; }
+.header-rule { display: flex; align-items: center; gap: 12px; margin: 0 auto 10px; max-width: 200px; }
+.header-rule::before, .header-rule::after { content: ''; flex: 1; height: .5px; background: var(--gold); }
+.diamond { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+.header-sub { font-size: .62rem; letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+
+/* ── Nav ── */
+nav { display: flex; justify-content: center; margin-bottom: 34px; border-bottom: .5px solid var(--border); animation: rise .7s .07s cubic-bezier(.16,1,.3,1) both; }
+.nav-btn { background: none; border: none; padding: 12px 32px; font-family: var(--sans); font-weight: 300; font-size: .65rem; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); cursor: pointer; position: relative; transition: color .3s; }
+.nav-btn::after { content: ''; position: absolute; bottom: -.5px; left: 50%; right: 50%; height: 1px; background: var(--gold); transition: left .3s, right .3s; }
+.nav-btn.active { color: var(--espresso); }
+.nav-btn.active::after { left: 18px; right: 18px; }
+
+/* ── Luxury Card ── */
+.card-wrap { animation: rise .7s .13s cubic-bezier(.16,1,.3,1) both; }
+
+.luxury-card {
+  background: var(--paper);
+  border: .5px solid var(--border);
+  padding: 32px 28px 28px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(28,22,16,.04), 0 14px 44px rgba(28,22,16,.07);
+}
+.luxury-card::before { content: ''; position: absolute; top: 13px; left: 13px; width: 20px; height: 20px; border-top: .5px solid var(--gold); border-left: .5px solid var(--gold); }
+.luxury-card::after  { content: ''; position: absolute; bottom: 13px; right: 13px; width: 20px; height: 20px; border-bottom: .5px solid var(--gold); border-right: .5px solid var(--gold); }
+.corner-tr { position: absolute; top: 13px; right: 13px; width: 20px; height: 20px; border-top: .5px solid var(--gold); border-right: .5px solid var(--gold); }
+.corner-bl { position: absolute; bottom: 13px; left: 13px; width: 20px; height: 20px; border-bottom: .5px solid var(--gold); border-left: .5px solid var(--gold); }
+
+.card-eyebrow { font-size: .52rem; letter-spacing: .4em; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 22px; }
+
+/* Portrait */
+.card-portrait-wrap { display: flex; justify-content: center; margin-bottom: 16px; }
+.card-portrait { width: 76px; height: 76px; border-radius: 50%; border: .5px solid var(--gold); box-shadow: 0 0 0 4px var(--paper), 0 0 0 4.5px var(--border); object-fit: cover; display: block; }
+.card-initials { width: 76px; height: 76px; border-radius: 50%; border: .5px solid var(--gold); box-shadow: 0 0 0 4px var(--paper), 0 0 0 4.5px var(--border); display: flex; align-items: center; justify-content: center; background: var(--linen); font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.5rem; color: var(--gold); }
+
+.card-name { font-family: var(--serif); font-weight: 300; font-size: 2.2rem; letter-spacing: .04em; color: var(--espresso); text-align: center; line-height: 1.05; margin-bottom: 6px; }
+.card-divider { display: flex; align-items: center; gap: 10px; margin: 10px auto 8px; max-width: 170px; }
+.card-divider::before, .card-divider::after { content: ''; flex: 1; height: .5px; background: var(--border); }
+.cdot { width: 4px; height: 4px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+.card-role { font-size: .65rem; letter-spacing: .22em; text-transform: uppercase; color: var(--warm); text-align: center; margin-bottom: 22px; }
+
+/* QR */
+.qr-area { display: flex; justify-content: center; margin-bottom: 22px; }
+.qr-mount {
+  position: relative; padding: 14px; background: white;
+  box-shadow: 0 1px 2px rgba(28,22,16,.06), 0 4px 20px rgba(28,22,16,.07);
+}
+.qr-mount::before { content: ''; position: absolute; top: 0; left: 22%; right: 22%; height: .5px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.qr-mount img { display: block; width: 200px; height: 200px; }
+
+.qr-loading {
+  width: 200px; height: 200px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; color: var(--muted); font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+}
+.qr-spinner {
+  width: 28px; height: 28px;
+  border: .5px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+.card-contacts { border-top: .5px solid var(--border); padding-top: 18px; display: grid; gap: 9px; }
+.contact-row { display: flex; align-items: baseline; gap: 12px; }
+.contact-label { font-size: .52rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); width: 48px; flex-shrink: 0; }
+.contact-value { font-size: .78rem; color: var(--warm); font-weight: 300; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card-scan-note { margin-top: 20px; text-align: center; font-size: .55rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+
+.card-download-area {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: .5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.vcf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background: transparent;
+  border: .5px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .64rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .25s, color .25s;
+}
+.vcf-btn:hover { background: var(--gold); color: var(--paper); }
+.vcf-btn:active { opacity: .8; }
+.vcf-hint { font-size: .54rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: center; line-height: 1.7; }
+
+/* Empty */
+.empty-state { text-align: center; padding: 64px 20px; animation: rise .5s ease both; }
+.empty-mark { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 3.2rem; color: var(--border); margin-bottom: 18px; letter-spacing: .04em; }
+.empty-text { font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); line-height: 2.1; }
+.empty-text em { color: var(--gold); font-style: normal; }
+
+/* ── Form ── */
+.form-wrap { animation: rise .5s ease both; }
+.form-section { margin-bottom: 28px; }
+.form-section-title { font-size: .54rem; letter-spacing: .32em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; gap: 12px; }
+.form-section-title::after { content: ''; flex: 1; height: .5px; background: var(--border); }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: .54rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.field label .req { color: var(--gold); margin-left: 3px; }
+.field input, .field textarea { width: 100%; background: transparent; border: none; border-bottom: .5px solid var(--border); color: var(--brown); font-family: var(--sans); font-weight: 300; font-size: .88rem; letter-spacing: .02em; padding: 9px 2px; outline: none; transition: border-color .25s; border-radius: 0; -webkit-appearance: none; }
+.field input:focus, .field textarea:focus { border-bottom-color: var(--gold); }
+.field input::placeholder, .field textarea::placeholder { color: var(--border); font-style: italic; font-family: var(--serif); }
+.field textarea { resize: vertical; min-height: 56px; }
+
+/* Photo upload */
+.photo-upload-zone { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 0 16px; }
+.photo-ring { position: relative; width: 92px; height: 92px; display: block; cursor: pointer; }
+.photo-ring-border { position: absolute; inset: 0; border-radius: 50%; border: .5px solid var(--gold); box-shadow: 0 0 0 4px var(--linen), 0 0 0 4.5px var(--border); pointer-events: none; }
+.photo-preview { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; display: block; }
+.photo-placeholder { width: 92px; height: 92px; border-radius: 50%; background: var(--paper); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+.photo-placeholder svg { opacity: .4; }
+.photo-placeholder span { font-size: .5rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.photo-hint { font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: center; line-height: 1.8; }
+.photo-hint em { color: var(--gold); font-style: normal; display: block; }
+.photo-remove-btn { background: none; border: none; cursor: pointer; font-size: .54rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-family: var(--sans); display: none; margin-top: 4px; }
+.photo-remove-btn.visible { display: inline-block; }
+
+/* Save */
+.submit-area { margin-top: 8px; }
+.save-btn { width: 100%; padding: 16px 24px; background: var(--espresso); color: var(--linen); border: none; font-family: var(--sans); font-weight: 300; font-size: .7rem; letter-spacing: .35em; text-transform: uppercase; cursor: pointer; transition: background .3s, letter-spacing .3s; position: relative; overflow: hidden; }
+.save-btn::after { content: ''; position: absolute; bottom: 0; left: 30%; right: 30%; height: .5px; background: var(--gold); transition: left .3s, right .3s; }
+.save-btn:hover { background: var(--brown); letter-spacing: .42em; }
+.save-btn:hover::after { left: 8%; right: 8%; }
+.save-btn:active { background: var(--espresso); }
+.save-confirm { text-align: center; font-size: .56rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-top: 14px; opacity: 0; transition: opacity .4s; }
+.save-confirm.show { opacity: 1; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="wordmark">Визитка</div>
+    <div class="header-rule"><span class="diamond"></span></div>
+    <div class="header-sub">Цифровая карточка контакта</div>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" onclick="switchTab('qr')">Карточка</button>
+    <button class="nav-btn" onclick="switchTab('edit')">Данные</button>
+  </nav>
+
+  <div id="view-qr"></div>
+
+  <div id="view-edit" style="display:none" class="form-wrap">
+
+    <div class="form-section">
+      <div class="form-section-title">Фото</div>
+      <div class="photo-upload-zone">
+        <label for="photo-input" class="photo-ring">
+          <div class="photo-ring-border"></div>
+          <div class="photo-placeholder" id="photo-placeholder">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+            <span>Добавить</span>
+          </div>
+          <img id="photo-preview-img" class="photo-preview" style="display:none" alt="">
+        </label>
+        <div style="text-align:center">
+          <div class="photo-hint"><em>Нажмите на круг</em>чтобы загрузить фото</div>
+          <button class="photo-remove-btn" id="photo-remove-btn" onclick="removePhoto()">Удалить фото</button>
+        </div>
+      </div>
+      <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Личное</div>
+      <div class="field"><label>Имя и фамилия <span class="req">*</span></label><input id="f-name" type="text" placeholder="Иван Петров" autocomplete="name"></div>
+      <div class="field"><label>Должность</label><input id="f-title" type="text" placeholder="Директор по развитию" autocomplete="organization-title"></div>
+      <div class="field"><label>Компания</label><input id="f-org" type="text" placeholder="Название организации" autocomplete="organization"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Контакты</div>
+      <div class="field"><label>Телефон</label><input id="f-phone" type="tel" placeholder="+7 900 000-00-00" autocomplete="tel"></div>
+      <div class="field"><label>E-mail</label><input id="f-email" type="email" placeholder="you@domain.com" autocomplete="email"></div>
+      <div class="field"><label>Сайт / Telegram</label><input id="f-url" type="url" placeholder="https://..."></div>
+      <div class="field"><label>Адрес</label><textarea id="f-address" placeholder="Город, улица..."></textarea></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Примечание</div>
+      <div class="field"><textarea id="f-note" placeholder="Дополнительная информация..."></textarea></div>
+    </div>
+
+    <div class="submit-area">
+      <button class="save-btn" onclick="save()">Сохранить и обновить QR</button>
+      <div class="save-confirm" id="save-confirm">Карточка обновлена</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Storage ── */
+async function storeGet(k) {
+  try { const r = await window.storage.get(k); return r ? JSON.parse(r.value) : null; } catch { return null; }
+}
+async function storeSet(k, v) {
+  try { await window.storage.set(k, JSON.stringify(v)); } catch {}
+}
+
+/* ── Photo ── */
+let currentPhoto = null;
+
+function handlePhoto(input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      // Crop square from center, resize to 280px
+      const size = Math.min(img.width, img.height);
+      const sx = (img.width - size) / 2;
+      const sy = (img.height - size) / 2;
+      const c = document.createElement('canvas');
+      c.width = c.height = 280;
+      c.getContext('2d').drawImage(img, sx, sy, size, size, 0, 0, 280, 280);
+      currentPhoto = c.toDataURL('image/jpeg', 0.82);
+      setPhotoPreview(currentPhoto);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function setPhotoPreview(src) {
+  const pl  = document.getElementById('photo-placeholder');
+  const img = document.getElementById('photo-preview-img');
+  const btn = document.getElementById('photo-remove-btn');
+  if (src) {
+    img.src = src; img.style.display = 'block';
+    pl.style.display = 'none';
+    btn.classList.add('visible');
+  } else {
+    img.style.display = 'none';
+    pl.style.display = 'flex';
+    btn.classList.remove('visible');
+  }
+}
+
+function removePhoto() {
+  currentPhoto = null;
+  document.getElementById('photo-input').value = '';
+  setPhotoPreview(null);
+}
+
+/* ── Tabs ── */
+function switchTab(tab) {
+  document.getElementById('view-qr').style.display   = tab === 'qr'   ? '' : 'none';
+  document.getElementById('view-edit').style.display = tab === 'edit' ? '' : 'none';
+  document.querySelectorAll('.nav-btn').forEach((b, i) =>
+    b.classList.toggle('active', (i===0&&tab==='qr')||(i===1&&tab==='edit'))
+  );
+}
+
+/* ── vCard с фото (для .vcf файла — без ограничений размера) ── */
+function buildVCardFull(d) {
+  const e = s => (s||'').replace(/[,;\\]/g, c => '\\' + c).replace(/\n/g, '\\n');
+  const p = (d.name||'').trim().split(/\s+/);
+  let v = 'BEGIN:VCARD\nVERSION:3.0\n';
+  if (d.name)    v += `FN:${e(d.name)}\nN:${e(p.slice(1).join(' '))};${e(p[0]||'')};;;\n`;
+  if (d.org)     v += `ORG:${e(d.org)}\n`;
+  if (d.title)   v += `TITLE:${e(d.title)}\n`;
+  if (d.phone)   v += `TEL;TYPE=CELL:${e(d.phone)}\n`;
+  if (d.email)   v += `EMAIL:${e(d.email)}\n`;
+  if (d.url)     v += `URL:${e(d.url)}\n`;
+  if (d.address) v += `ADR;TYPE=HOME:;;${e(d.address)};;;;\n`;
+  if (d.note)    v += `NOTE:${e(d.note)}\n`;
+  if (d.photo) {
+    const b64 = d.photo.replace(/^data:image\/\w+;base64,/, '');
+    const raw = 'PHOTO;ENCODING=b;TYPE=JPEG:' + b64;
+    v += raw.match(/.{1,75}/g).join('\r\n ') + '\r\n';
+  }
+  return v + 'END:VCARD';
+}
+
+function downloadVCF() {
+  storeGet('contact').then(data => {
+    if (!data || !data.name) return;
+    const blob = new Blob([buildVCardFull(data)], { type: 'text/vcard;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = Object.assign(document.createElement('a'), { href: url, download: (data.name.replace(/\s+/g,'_')||'contact') + '.vcf' });
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+  });
+}
+
+/* ── vCard без фото (для QR — данных мало, код читается) ── */
+function buildVCard(d) {
+  const e = s => (s||'').replace(/[,;\\]/g, c => '\\' + c).replace(/\n/g, '\\n');
+  const p = (d.name||'').trim().split(/\s+/);
+  let v = 'BEGIN:VCARD\nVERSION:3.0\n';
+  if (d.name)    v += `FN:${e(d.name)}\nN:${e(p.slice(1).join(' '))};${e(p[0]||'')};;;\n`;
+  if (d.org)     v += `ORG:${e(d.org)}\n`;
+  if (d.title)   v += `TITLE:${e(d.title)}\n`;
+  if (d.phone)   v += `TEL;TYPE=CELL:${e(d.phone)}\n`;
+  if (d.email)   v += `EMAIL:${e(d.email)}\n`;
+  if (d.url)     v += `URL:${e(d.url)}\n`;
+  if (d.address) v += `ADR;TYPE=HOME:;;${e(d.address)};;;;\n`;
+  if (d.note)    v += `NOTE:${e(d.note)}\n`;
+  return v + 'END:VCARD';
+}
+
+/* ── QR via image API (no JS library needed) ── */
+function makeQRUrl(text) {
+  return 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&color=1c1610&bgcolor=ffffff&data='
+    + encodeURIComponent(text);
+}
+
+function getInitials(name) {
+  return (name||'').trim().split(/\s+/).map(w => w[0]||'').slice(0,2).join('').toUpperCase();
+}
+
+/* ── Render ── */
+function renderQR(data) {
+  const el = document.getElementById('view-qr');
+
+  if (!data || !data.name) {
+    el.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-mark">carte</div>
+        <div class="empty-text">
+          Перейдите в раздел <em>Данные</em>,<br>
+          заполните информацию о себе —<br>
+          здесь появится ваша карточка.
+        </div>
+      </div>`;
+    return;
+  }
+
+  const role = [data.title, data.org].filter(Boolean).join('  ·  ');
+  const rows = [
+    data.phone && { label: 'Тел',  val: data.phone },
+    data.email && { label: 'Mail', val: data.email },
+    data.url   && { label: 'Web',  val: data.url.replace(/^https?:\/\//, '') },
+  ].filter(Boolean);
+
+  const portrait = data.photo
+    ? `<img class="card-portrait" src="${data.photo}" alt="">`
+    : `<div class="card-initials">${getInitials(data.name)}</div>`;
+
+  const vcard   = buildVCard(data);
+  const qrUrl   = makeQRUrl(vcard);
+
+  el.innerHTML = `
+    <div class="card-wrap">
+      <div class="luxury-card">
+        <span class="corner-tr"></span>
+        <span class="corner-bl"></span>
+
+        <div class="card-eyebrow">Контактная карточка</div>
+
+        <div class="card-portrait-wrap">${portrait}</div>
+
+        <div class="card-name">${data.name}</div>
+        ${role
+          ? `<div class="card-divider"><span class="cdot"></span></div><div class="card-role">${role}</div>`
+          : '<div style="height:22px"></div>'}
+
+        <div class="qr-area">
+          <div class="qr-mount">
+            <div id="qr-loading" class="qr-loading">
+              <div class="qr-spinner"></div>
+              <span>Генерация</span>
+            </div>
+            <img id="qr-img" style="display:none"
+              src="${qrUrl}"
+              alt="QR-код"
+              onload="this.style.display='block';document.getElementById('qr-loading').style.display='none'"
+              onerror="document.getElementById('qr-loading').innerHTML='<span style=color:var(--muted)>Нет соединения</span>'">
+          </div>
+        </div>
+
+        ${rows.length ? `
+          <div class="card-contacts">
+            ${rows.map(r => `<div class="contact-row"><span class="contact-label">${r.label}</span><span class="contact-value">${r.val}</span></div>`).join('')}
+          </div>` : ''}
+
+        <div class="card-scan-note">Наведите камеру телефона — контакт сохранится автоматически</div>
+        <div class="card-download-area">
+          <button class="vcf-btn" onclick="downloadVCF()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Скачать .vcf с фото
+          </button>
+          <div class="vcf-hint">Передайте через AirDrop, мессенджер или email</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ── Load form ── */
+function loadForm(d) {
+  if (!d) return;
+  ['name','title','org','phone','email','url','address','note'].forEach(k => {
+    const el = document.getElementById('f-' + k);
+    if (el && d[k]) el.value = d[k];
+  });
+  if (d.photo) { currentPhoto = d.photo; setPhotoPreview(d.photo); }
+}
+
+/* ── Save ── */
+async function save() {
+  const data = {};
+  ['name','title','org','phone','email','url','address','note'].forEach(k => {
+    data[k] = (document.getElementById('f-' + k).value || '').trim();
+  });
+  if (currentPhoto) data.photo = currentPhoto;
+
+  await storeSet('contact', data);
+  renderQR(data);
+
+  const c = document.getElementById('save-confirm');
+  c.classList.add('show');
+  setTimeout(() => { c.classList.remove('show'); switchTab('qr'); }, 1200);
+}
+
+/* ── Init ── */
+(async () => {
+  const data = await storeGet('contact');
+  loadForm(data);
+  renderQR(data);
+})();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+}
+</script>
+</body>
+</html>
